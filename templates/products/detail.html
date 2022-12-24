@@ -37,10 +37,25 @@
             border: 1px solid #242b2e;
             color: white;
         }
+        .product {
+            width: 80%;
+        }
     </style>
     <div class="product">
+        {% if product.image %}
+            <img src="/media/{{ product.image }}" alt="image not found">
+        {% else %}
+            <img src="/media/Без%20названия%20(4).jpg" alt="">
+        {% endif %}
         <h1>{{ product.title }}</h1>
         <h5>{{ product.description }}</h5>
+        <div class="Category">
+            {% for category in categories %}
+                <div class="category">
+                    <h6>{{ category.title }}</h6>
+                </div>
+            {% endfor %}
+        </div>
         <div class="dates">
             <h5>{{ product.created_date }}</h5>
             <h5>{{ product.modifed_date }}</h5>
