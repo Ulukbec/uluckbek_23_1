@@ -17,6 +17,7 @@ class Products(models.Model):
     created_date = models.DateTimeField(auto_now=True)
     price = models.PositiveIntegerField()
     category = models.ManyToManyField(Category)
+    review_table = models.BooleanField(default=True)
 
     def __str__(self):
         return self.title

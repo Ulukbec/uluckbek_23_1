@@ -28,15 +28,18 @@
             color: white;
             background: black;
         }
-        .review{
+
+        .review {
             margin-top: 30px;
         }
+
         .review_block {
             height: max-content;
             padding: 10px;
             border: 1px solid #242b2e;
             color: white;
         }
+
         .product {
             width: 80%;
         }
@@ -60,14 +63,21 @@
             <h5>{{ product.created_date }}</h5>
             <h5>{{ product.modifed_date }}</h5>
         </div>
-        <div class="review">
-            {% for review in review %}
-                <div class="review_block">
-                    <h6>{{ review.text }}</h6>
-                    <p>{{ review.created_date }}</p>
-                </div>
-            {% endfor %}
-        </div>
+        {% if product.review_table %}
+            <form action="/products/{{ product.id }}/" method="post">
+                {% csrf_token %}
+                {{ category_form }}
+                <input type="submit" class="btn">
+            </form>
+            <div class="review">
+                {% for review in review %}
+                    <div class="review_block">
+                        <h6>{{ review.text }}</h6>
+                        <p>{{ review.created_date }}</p>
+                    </div>
+                {% endfor %}
+            </div>
+        {% endif %}
 
     </div>
 {% endblock %}
