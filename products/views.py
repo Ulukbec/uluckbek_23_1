@@ -20,7 +20,8 @@ def products_view(request):
         else:
             product = Products.objects.all()
         return render(request, 'products/products.html', context={
-            'products': product
+            'products': product,
+            'user': None if request.user.is_anonymous else request.user
         })
 
 
@@ -31,7 +32,7 @@ def products_detail_view(request, id):
             'product': product,
             'review': product.review.all(),
             'categories': product.category.all(),
-            'category_form': ReviewCreateForm
+            'form': ReviewCreateForm
         }
         return render(request, 'products/detail.html', context=data)
 
@@ -41,6 +42,7 @@ def products_detail_view(request, id):
 
         if form.is_valid():
             Review.objects.create(
+                user=request.user,
                 product_id=id,
                 text=form.cleaned_data.get('text')
             )
@@ -49,7 +51,7 @@ def products_detail_view(request, id):
             return render(request, 'products/detail.html', context={
                 'product': product,
                 'categories': product.category.all(),
-                'category_form': form,
+                'form': form,
                 'review': product.review.all()
             })
 
@@ -76,6 +78,7 @@ def product_creat_view(request):
 
         if form.is_valid():
             Products.objects.create(
+                user=request.user,
                 title=form.cleaned_data.get('title'),
                 description=form.cleaned_data.get('description'),
                 price=form.cleaned_data.get('price', 0),

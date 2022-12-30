@@ -50,7 +50,10 @@
         {% else %}
             <img src="/media/Без%20названия%20(4).jpg" alt="">
         {% endif %}
-        <h1>{{ product.title }}</h1>
+        <div style="display: flex; justify-content: space-between">
+            <h1>{{ product.title }}</h1>
+            <h1>{{ product.user.username }}</h1>
+        </div>
         <h5>{{ product.description }}</h5>
         <div class="Category">
             {% for category in categories %}
@@ -66,14 +69,15 @@
         {% if product.review_table %}
             <form action="/products/{{ product.id }}/" method="post">
                 {% csrf_token %}
-                {{ category_form }}
+                {{ form }}
                 <input type="submit" class="btn">
             </form>
             <div class="review">
-                {% for review in review %}
+                {% for reviews in review %}
                     <div class="review_block">
-                        <h6>{{ review.text }}</h6>
-                        <p>{{ review.created_date }}</p>
+                        <h3>{{ reviews.user.username }}</h3>
+                        <h6>{{ reviews.text }}</h6>
+                        <p>{{ reviews.created_date }}</p>
                     </div>
                 {% endfor %}
             </div>
