@@ -29,17 +29,6 @@
             background: black;
         }
 
-        .review {
-            margin-top: 30px;
-        }
-
-        .review_block {
-            height: max-content;
-            padding: 10px;
-            border: 1px solid #242b2e;
-            color: white;
-        }
-
         .product {
             width: 80%;
         }
@@ -69,13 +58,15 @@
         {% if product.review_table %}
             <form action="/products/{{ product.id }}/" method="post">
                 {% csrf_token %}
-                {{ form }}
-                <input type="submit" class="btn">
+                {% if user %}
+                    {{ form }}
+                    <input type="submit" class="btn">
+                {% endif %}
             </form>
             <div class="review">
                 {% for reviews in review %}
                     <div class="review_block">
-                        <h3>{{ reviews.user.username }}</h3>
+                        <h3 size="">{{ reviews.user.username }}</h3>
                         <h6>{{ reviews.text }}</h6>
                         <p>{{ reviews.created_date }}</p>
                     </div>
