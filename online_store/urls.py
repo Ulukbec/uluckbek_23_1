@@ -15,21 +15,28 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path
-from products.views import main_view, products_view, products_detail_view, categories_view, product_creat_view
+from products.views import (
+    MainView,
+    ProductCBV,
+    PostCreate,
+    ProductsDetailView,
+    CategoriesView,
+)
 from django.conf.urls.static import static
 from online_store import settings
-from users.views import login_view, logout_view, register_view
+from users.views import RegisterView, LoginView, Logout
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('', main_view),
-    path('products/', products_view),
-    path('products/<int:id>/', products_detail_view),
-    path('products/create/', product_creat_view),
-    path('categories/', categories_view),
-    path('users/login/', login_view),
-    path('users/logout/', logout_view),
-    path('users/register/', register_view),
+    path('', MainView.as_view()),
+    path('products/', ProductCBV.as_view()),
+    path('products/<int:id>/', ProductsDetailView.as_view()),
+    path('products/create/', PostCreate.as_view()),
+    path('categories/', CategoriesView.as_view()),
+
+    path('users/login/', LoginView.as_view()),
+    path('users/logout/', Logout.as_view()),
+    path('users/register/', RegisterView.as_view()),
 
 ]
 
